@@ -1,7 +1,7 @@
 import type { Act, Trivia } from '../types';
 
 // Sample acts for testing
-export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
+export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt' | 'submissionDate' | 'lastUpdated'>[] = [
   {
     name: "Grade 1 Singing Stars",
     grade: "Grade 1",
@@ -11,6 +11,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
   {
     name: "Grade 2 Dance Crew",
@@ -21,6 +23,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
   {
     name: "Grade 3 Magic Show",
@@ -31,6 +35,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
   {
     name: "Grade 4 Poetry Recital",
@@ -41,6 +47,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
   {
     name: "Grade 5 Instrumental Ensemble",
@@ -51,6 +59,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
   {
     name: "Grade 6 Comedy Skit",
@@ -61,6 +71,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
   {
     name: "Grade 7 Acrobatics",
@@ -71,6 +83,8 @@ export const sampleActs: Omit<Act, 'id' | 'createdAt' | 'updatedAt'>[] = [
     isVotingOpen: false,
     avgScore: 0,
     votesCount: 0,
+    status: 'approved',
+    submittedBy: 'Admin',
   },
 ];
 

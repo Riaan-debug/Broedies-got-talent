@@ -107,7 +107,7 @@ export const useComments = (actId: string) => {
     return unsubscribe;
   }, [actId]);
 
-  const submitComment = async (text: string, emoji?: string) => {
+  const handleSubmitComment = async (text: string, emoji?: string) => {
     try {
       await submitComment({
         actId,
@@ -120,7 +120,7 @@ export const useComments = (actId: string) => {
     }
   };
 
-  return { comments, submitComment, loading };
+  return { comments, submitComment: handleSubmitComment, loading };
 };
 
 // Hook for managing trivia
@@ -156,7 +156,7 @@ export const useTimer = (duration: number, onComplete?: () => void) => {
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
 
     if (isRunning && timeLeft > 0) {
       interval = setInterval(() => {

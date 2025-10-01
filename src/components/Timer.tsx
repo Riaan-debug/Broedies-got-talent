@@ -7,7 +7,7 @@ const Timer: React.FC<TimerProps> = ({ duration, onComplete, className = '' }) =
   const [isRunning, setIsRunning] = React.useState(false);
 
   React.useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
 
     if (isRunning && timeLeft > 0) {
       interval = setInterval(() => {
@@ -30,8 +30,6 @@ const Timer: React.FC<TimerProps> = ({ duration, onComplete, className = '' }) =
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
-
-  const progress = ((duration - timeLeft) / duration) * 100;
 
   return (
     <div className={`text-center ${className}`}>

@@ -9,7 +9,7 @@ import TriviaCard from '../components/TriviaCard';
 const AudienceVoting: React.FC = () => {
   const { activeAct, loading: actLoading } = useActiveAct();
   const { hasVoted, userVote, vote, loading: voteLoading } = useVoting(activeAct?.id || '');
-  const { comments, submitComment, loading: commentsLoading } = useComments(activeAct?.id || '');
+  const { comments, submitComment } = useComments(activeAct?.id || '');
   const { activeTrivia, answerTrivia, loading: triviaLoading } = useTrivia();
 
   const handleVote = async (rating: number) => {

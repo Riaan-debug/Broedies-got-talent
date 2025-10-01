@@ -10,7 +10,6 @@ const AdminDashboard: React.FC = () => {
   const { user, logout } = useAuth();
   const { acts, loading } = useActs();
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingAct, setEditingAct] = useState<string | null>(null);
   const [pendingActs, setPendingActs] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'approved' | 'pending'>('approved');
   const [formData, setFormData] = useState({
@@ -64,6 +63,8 @@ const AdminDashboard: React.FC = () => {
         isVotingOpen: false,
         avgScore: 0,
         votesCount: 0,
+        status: 'approved' as const,
+        submittedBy: 'Admin',
       };
 
       await createAct(newAct);
@@ -363,7 +364,7 @@ const AdminDashboard: React.FC = () => {
                     onActivate={() => handleActivate(act.id)}
                     onStartVoting={() => handleStartVoting(act.id)}
                     onStopVoting={() => handleStopVoting(act.id)}
-                    onEdit={() => setEditingAct(act.id)}
+                    onEdit={() => console.log('Edit act:', act.id)}
                     onDelete={() => handleDeleteAct(act.id)}
                     isAdmin={true}
                   />

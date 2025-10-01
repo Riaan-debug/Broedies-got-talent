@@ -7,22 +7,6 @@ import AudienceVoting from './pages/AudienceVoting';
 import DisplayScreen from './pages/DisplayScreen';
 import ActRegistration from './pages/ActRegistration';
 
-// Protected Route Component
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-lg text-gray-600">Loading...</p>
-      </div>
-    );
-  }
-
-  return user ? <>{children}</> : <Navigate to="/login" replace />;
-};
-
 // Admin Route Component
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading, isAdmin } = useAuth();

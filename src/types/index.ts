@@ -12,6 +12,13 @@ export interface Act {
   votesCount: number;
   createdAt: Date;
   updatedAt: Date;
+  // New fields for self-registration
+  status: 'pending' | 'approved' | 'rejected';
+  submittedBy: string; // Email or contact info
+  contactEmail?: string;
+  contactPhone?: string;
+  submissionDate: Date;
+  lastUpdated: Date;
 }
 
 export interface Vote {

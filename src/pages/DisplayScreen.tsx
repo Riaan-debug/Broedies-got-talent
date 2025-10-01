@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActiveAct, useComments, useTrivia } from '../hooks';
+import type { Comment } from '../types';
 
 const DisplayScreen: React.FC = () => {
   const { activeAct, loading: actLoading } = useActiveAct();
-  const { comments, loading: commentsLoading } = useComments(activeAct?.id || '');
+  const { comments } = useComments(activeAct?.id || '');
   const { activeTrivia, loading: triviaLoading } = useTrivia();
-  const [displayedComments, setDisplayedComments] = useState<string[]>([]);
+  const [displayedComments, setDisplayedComments] = useState<Comment[]>([]);
 
   // Rotate through comments every 3 seconds
   useEffect(() => {
@@ -206,12 +207,12 @@ const DisplayScreen: React.FC = () => {
           >
             <div className="flex items-center justify-center gap-6 mb-6">
               <span className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full text-2xl font-bold">
-                ACT{activeAct.id.slice(-3)}
+                ACT{activeAct?.id.slice(-3)}
               </span>
               <span className="bg-yellow-500 px-6 py-3 rounded-full text-2xl font-bold">
-                {activeAct.grade}
+                {activeAct?.grade}
               </span>
-              {activeAct.isVotingOpen && (
+              {activeAct?.isVotingOpen && (
                 <motion.span
                   className="bg-pink-500 px-6 py-3 rounded-full text-2xl font-bold"
                   initial={{ scale: 0 }}
@@ -223,8 +224,8 @@ const DisplayScreen: React.FC = () => {
               )}
             </div>
             
-            <h1 className="text-7xl font-bold mb-6">{activeAct.name}</h1>
-            <p className="text-3xl text-gray-300 mb-8">{activeAct.description}</p>
+            <h1 className="text-7xl font-bold mb-6">{activeAct?.name}</h1>   
+            <p className="text-3xl text-gray-300 mb-8">{activeAct?.description}</p>
           </motion.div>
 
           {/* Voting Status */}
@@ -234,7 +235,7 @@ const DisplayScreen: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            {activeAct.isVotingOpen ? (
+            {activeAct?.isVotingOpen ? (
               <div className="bg-green-500/20 backdrop-blur-sm rounded-2xl p-8 mb-8">
                 <h2 className="text-4xl font-bold mb-4">🗳️ Voting is OPEN!</h2>
                 <p className="text-2xl text-gray-300">
@@ -252,7 +253,7 @@ const DisplayScreen: React.FC = () => {
           </motion.div>
 
           {/* Results */}
-          {activeAct.votesCount > 0 && (
+          {activeAct?.votesCount && activeAct.votesCount > 0 && (
             <motion.div
               className="bg-white/10 backdrop-blur-sm rounded-3xl p-12"
               initial={{ opacity: 0, y: 30 }}
@@ -268,11 +269,11 @@ const DisplayScreen: React.FC = () => {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
                 >
-                  {activeAct.avgScore.toFixed(1)}
+                  {activeAct?.avgScore.toFixed(1)}
                 </motion.div>
                 <div className="text-6xl mb-4">⭐</div>
                 <p className="text-3xl text-gray-300 mb-6">
-                  Average rating from {activeAct.votesCount} votes
+                  Average rating from {activeAct?.votesCount} votes
                 </p>
                 
                 {/* Progress Bar */}
@@ -280,7 +281,7 @@ const DisplayScreen: React.FC = () => {
                   <motion.div
                     className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-8 rounded-full"
                     initial={{ width: 0 }}
-                    animate={{ width: `${(activeAct.avgScore / 5) * 100}%` }}
+                    animate={{ width: `${((activeAct?.avgScore || 0) / 5) * 100}%` }}
                     transition={{ duration: 2, ease: 'easeOut', delay: 1 }}
                   />
                 </div>

@@ -5,15 +5,12 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
-  getDoc,
   query,
   orderBy,
   where,
   onSnapshot,
   serverTimestamp,
   increment,
-  arrayUnion,
-  arrayRemove,
 } from 'firebase/firestore';
 import { db } from './firebase';
 // Define types locally to avoid import issues
