@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Acts collection - readable by all, writable by authenticated users
+    match /acts/{actId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Votes collection - readable by all, writable by authenticated users
+    match /votes/{voteId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if false; // Votes cannot be modified once created
+    }
+    
+    // Comments collection - readable by all, writable by authenticated users
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null; // Allow updates for approval
+      allow delete: if request.auth != null;
+    }
+    
+    // Trivia collection - readable by all, writable by authenticated users
+    match /trivia/{triviaId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+

@@ -1,0 +1,28 @@
+{
+  "name": "broedies-got-talent",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && firebase deploy",
+    "firebase:init": "firebase init",
+    "firebase:login": "firebase login",
+    "firebase:serve": "firebase serve"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.7"
+  },
+  "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "firebase": "^12.3.0",
+    "framer-motion": "^12.23.22",
+    "react-router-dom": "^7.9.3",
+    "tailwindcss": "^3.4.17"
+  }
+}
