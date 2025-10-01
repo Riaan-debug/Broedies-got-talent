@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useActs } from '../hooks';
 import ActCard from '../components/ActCard';
-import { createAct, updateAct, deleteAct, getActsByStatus, updateActStatus } from '../utils/firestore';
+import { createAct, updateAct, deleteAct, getActsByStatus, updateActStatus, updateActWithHistory } from '../utils/firestore';
 import { sampleActs } from '../data/seedData';
 
 const AdminDashboard: React.FC = () => {
@@ -12,6 +12,12 @@ const AdminDashboard: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [pendingActs, setPendingActs] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'approved' | 'pending'>('approved');
+  const [editingActId, setEditingActId] = useState<string | null>(null);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    grade: '',
+    description: '',
+  });
   const [formData, setFormData] = useState({
     name: '',
     grade: '',
@@ -22,7 +28,9 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     const loadPendingActs = async () => {
       try {
+        console.log('Loading pending acts...');
         const pending = await getActsByStatus('pending');
+        console.log('Found pending acts:', pending);
         setPendingActs(pending);
       } catch (error) {
         console.error('Error loading pending acts:', error);
@@ -30,6 +38,11 @@ const AdminDashboard: React.FC = () => {
     };
     
     loadPendingActs();
+    
+    // Also reload when acts change (in case a new act was registered)
+    const interval = setInterval(loadPendingActs, 5000); // Check every 5 seconds
+    
+    return () => clearInterval(interval);
   }, []);
 
   const handleApproveAct = async (actId: string) => {
@@ -146,6 +159,38 @@ const AdminDashboard: React.FC = () => {
     );
   }
 
+  const handleEditAct = (act: any) => {
+    setEditingActId(act.id);
+    setEditFormData({
+      name: act.name,
+      grade: act.grade,
+      description: act.description,
+    });
+  };
+
+  const handleSaveEdit = async (actId: string) => {
+    try {
+      const originalAct = [...acts, ...pendingActs].find(act => act.id === actId);
+      if (!originalAct) return;
+
+      await updateActWithHistory(actId, editFormData, originalAct, user?.email || 'Admin');
+      
+      // Update local state
+      setPendingActs(prev => prev.map(act => 
+        act.id === actId ? { ...act, ...editFormData } : act
+      ));
+      
+      setEditingActId(null);
+    } catch (error) {
+      console.error('Error saving edit:', error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingActId(null);
+    setEditFormData({ name: '', grade: '', description: '' });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50">
       {/* Header */}
@@ -246,10 +291,24 @@ const AdminDashboard: React.FC = () => {
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              Approved Acts ({acts.length})
+              Approved Acts ({acts.filter(act => act.status === 'approved').length})
             </button>
             <button
-              onClick={() => setActiveTab('pending')}
+              onClick={() => {
+                setActiveTab('pending');
+                // Reload pending acts when switching to pending tab
+                const loadPendingActs = async () => {
+                  try {
+                    console.log('Manually loading pending acts...');
+                    const pending = await getActsByStatus('pending');
+                    console.log('Manually found pending acts:', pending);
+                    setPendingActs(pending);
+                  } catch (error) {
+                    console.error('Error loading pending acts:', error);
+                  }
+                };
+                loadPendingActs();
+              }}
               className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
                 activeTab === 'pending'
                   ? 'bg-white text-blue-600 shadow-sm'
@@ -330,7 +389,7 @@ const AdminDashboard: React.FC = () => {
         {/* Acts List */}
         <div className="space-y-6">
           {activeTab === 'approved' ? (
-            acts.length === 0 ? (
+            acts.filter(act => act.status === 'approved').length === 0 ? (
               <motion.div
                 className="text-center py-12"
                 initial={{ opacity: 0 }}
@@ -352,7 +411,7 @@ const AdminDashboard: React.FC = () => {
                 </button>
               </motion.div>
             ) : (
-              acts.map((act, index) => (
+              acts.filter(act => act.status === 'approved').map((act, index) => (
                 <motion.div
                   key={act.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -415,17 +474,62 @@ const AdminDashboard: React.FC = () => {
                             ACT{act.id.slice(-3)}
                           </span>
                           <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
-                            {act.grade}
+                            {editingActId === act.id ? editFormData.grade : act.grade}
                           </span>
                         </div>
                         
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">
-                          {act.name}
-                        </h3>
-                        
-                        <p className="text-gray-600 mb-3">
-                          {act.description}
-                        </p>
+                        {editingActId === act.id ? (
+                          <div className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Act Name
+                              </label>
+                              <input
+                                type="text"
+                                value={editFormData.name}
+                                onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
+                                className="input-field"
+                                placeholder="Act name"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Grade
+                              </label>
+                              <input
+                                type="text"
+                                value={editFormData.grade}
+                                onChange={(e) => setEditFormData(prev => ({ ...prev, grade: e.target.value }))}
+                                className="input-field"
+                                placeholder="Grade"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Description
+                              </label>
+                              <textarea
+                                value={editFormData.description}
+                                onChange={(e) => setEditFormData(prev => ({ ...prev, description: e.target.value }))}
+                                rows={3}
+                                className="input-field"
+                                placeholder="Act description"
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <h3 className="text-xl font-bold text-gray-800 mb-2">
+                              {act.name}
+                            </h3>
+                            
+                            <p className="text-gray-600 mb-3">
+                              {act.description}
+                            </p>
+                          </>
+                        )}
 
                         <div className="text-sm text-gray-500 mb-3">
                           <p><strong>Submitted by:</strong> {act.submittedBy}</p>
@@ -436,18 +540,43 @@ const AdminDashboard: React.FC = () => {
                       </div>
 
                       <div className="flex flex-col gap-2 ml-4">
-                        <button
-                          onClick={() => handleApproveAct(act.id)}
-                          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200"
-                        >
-                          ✅ Approve
-                        </button>
-                        <button
-                          onClick={() => handleRejectAct(act.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200"
-                        >
-                          ❌ Reject
-                        </button>
+                        {editingActId === act.id ? (
+                          <>
+                            <button
+                              onClick={() => handleSaveEdit(act.id)}
+                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200 flex items-center gap-2"
+                            >
+                              💾 Save
+                            </button>
+                            <button
+                              onClick={handleCancelEdit}
+                              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200 flex items-center gap-2"
+                            >
+                              ✗ Cancel
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => handleEditAct(act)}
+                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200 flex items-center gap-2"
+                            >
+                              ✏️ Edit
+                            </button>
+                            <button
+                              onClick={() => handleApproveAct(act.id)}
+                              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200"
+                            >
+                              ✅ Approve
+                            </button>
+                            <button
+                              onClick={() => handleRejectAct(act.id)}
+                              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200"
+                            >
+                              ❌ Reject
+                            </button>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

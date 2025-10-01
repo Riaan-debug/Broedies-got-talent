@@ -48,6 +48,24 @@ export interface Trivia {
   createdAt: Date;
 }
 
+export interface Notification {
+  id: string;
+  actId: string;
+  submittedBy: string; // Who submitted the act
+  contactEmail?: string;
+  type: 'edit' | 'approve' | 'reject';
+  message: string;
+  editHistory?: EditChange[]; // Only for edit notifications
+  isRead: boolean;
+  createdAt: Date;
+}
+
+export interface EditChange {
+  field: string;
+  oldValue: string;
+  newValue: string;
+}
+
 export interface User {
   uid: string;
   email: string;
