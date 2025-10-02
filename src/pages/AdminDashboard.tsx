@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useActs } from '../hooks';
 import ActCard from '../components/ActCard';
+import QRCodeDisplay from '../components/QRCodeDisplay';
 import { createAct, updateAct, deleteAct, getActsByStatus, updateActStatus, updateActWithHistory } from '../utils/firestore';
 import { sampleActs } from '../data/seedData';
 
@@ -274,6 +275,41 @@ const AdminDashboard: React.FC = () => {
             >
               👥 Audience View
             </a>
+          </div>
+        </motion.div>
+
+        {/* QR Code Section */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-secondary-200 text-glow mb-2">
+              📱 Audience Access QR Codes
+            </h2>
+            <p className="text-secondary-300 font-semibold">
+              Share these QR codes for easy audience access
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <QRCodeDisplay
+              url={`${window.location.origin}/vote`}
+              title="🎭 Audience Voting"
+              description="Scan to vote and comment on acts"
+            />
+            <QRCodeDisplay
+              url={`${window.location.origin}/register`}
+              title="📝 Act Registration"
+              description="Scan to register a new act"
+            />
+            <QRCodeDisplay
+              url={`${window.location.origin}/display`}
+              title="📺 Display Screen"
+              description="Scan for projector display view"
+            />
           </div>
         </motion.div>
 

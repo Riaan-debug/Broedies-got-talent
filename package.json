@@ -20,9 +20,11 @@
     "vite": "^7.1.7"
   },
   "dependencies": {
+    "@types/qrcode": "^1.5.5",
     "@types/react-router-dom": "^5.3.3",
     "firebase": "^12.3.0",
     "framer-motion": "^12.23.22",
+    "qrcode": "^1.5.4",
     "react-router-dom": "^7.9.3",
     "tailwindcss": "^3.4.17"
   }
