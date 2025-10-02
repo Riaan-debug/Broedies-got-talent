@@ -192,10 +192,10 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50">
+    <div className="min-h-screen bg-theatrical">
       {/* Header */}
       <motion.header
-        className="bg-white shadow-lg border-b border-gray-200"
+        className="bg-gradient-to-r from-curtain-800 via-curtain-700 to-curtain-800 shadow-2xl border-b-4 border-secondary-400"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -203,20 +203,22 @@ const AdminDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-blue-600">
-                🎭 Broedies Got Talent - Admin
+              <h1 className="text-4xl font-bold text-secondary-200 text-glow">
+                🎭 BROEDIES GOT TALENT
               </h1>
-              <p className="text-gray-600">Manage acts, voting, and trivia</p>
+              <p className="text-secondary-300 mt-2 text-lg font-semibold">
+                ✨ ADMIN PANEL ✨
+              </p>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-secondary-300">
                 Welcome, {user?.email}
               </span>
               <button
                 onClick={logout}
-                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+                className="btn-curtain"
               >
-                Logout
+                🚪 Logout
               </button>
             </div>
           </div>
@@ -235,9 +237,9 @@ const AdminDashboard: React.FC = () => {
           <div className="flex gap-4">
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="btn-primary"
+              className="btn-spotlight"
             >
-              ➕ Add New Act
+              ✨ Add New Act
             </button>
             <button
               onClick={handleSeedData}
@@ -249,7 +251,7 @@ const AdminDashboard: React.FC = () => {
               href="/register"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+              className="btn-primary"
             >
               📝 Registration Page
             </a>
@@ -268,7 +270,7 @@ const AdminDashboard: React.FC = () => {
               href="/vote"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+              className="btn-accent"
             >
               👥 Audience View
             </a>
@@ -282,16 +284,16 @@ const AdminDashboard: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg w-fit">
+          <div className="flex space-x-1 bg-curtain-800 p-1 rounded-lg w-fit border-2 border-secondary-400">
             <button
               onClick={() => setActiveTab('approved')}
-              className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
+              className={`px-6 py-3 rounded-md font-bold transition-all duration-300 ${
                 activeTab === 'approved'
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
+                  ? 'bg-secondary-500 text-white shadow-lg transform scale-105'
+                  : 'text-secondary-200 hover:text-white hover:bg-curtain-700'
               }`}
             >
-              Approved Acts ({acts.filter(act => act.status === 'approved').length})
+              ✨ Approved Acts ({acts.filter(act => act.status === 'approved').length})
             </button>
             <button
               onClick={() => {
@@ -309,13 +311,13 @@ const AdminDashboard: React.FC = () => {
                 };
                 loadPendingActs();
               }}
-              className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
+              className={`px-6 py-3 rounded-md font-bold transition-all duration-300 ${
                 activeTab === 'pending'
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
+                  ? 'bg-secondary-500 text-white shadow-lg transform scale-105'
+                  : 'text-secondary-200 hover:text-white hover:bg-curtain-700'
               }`}
             >
-              Pending Review ({pendingActs.length})
+              ⏳ Pending Review ({pendingActs.length})
             </button>
           </div>
         </motion.div>
@@ -463,18 +465,18 @@ const AdminDashboard: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className="card border-l-4 border-yellow-400">
+                  <div className="card-theatrical border-l-4 border-secondary-400">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">
-                            PENDING REVIEW
+                          <span className="bg-secondary-200 text-secondary-800 px-3 py-1 rounded-full text-sm font-bold border border-secondary-400">
+                            ⏳ PENDING REVIEW
                           </span>
-                          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
-                            ACT{act.id.slice(-3)}
+                          <span className="bg-primary-200 text-primary-800 px-3 py-1 rounded-full text-sm font-bold border border-primary-400">
+                            🎭 ACT{act.id.slice(-3)}
                           </span>
-                          <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
-                            {editingActId === act.id ? editFormData.grade : act.grade}
+                          <span className="bg-accent-200 text-accent-800 px-3 py-1 rounded-full text-sm font-bold border border-accent-400">
+                            📚 {editingActId === act.id ? editFormData.grade : act.grade}
                           </span>
                         </div>
                         
@@ -544,13 +546,13 @@ const AdminDashboard: React.FC = () => {
                           <>
                             <button
                               onClick={() => handleSaveEdit(act.id)}
-                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200 flex items-center gap-2"
+                              className="btn-spotlight text-sm py-2 px-4"
                             >
                               💾 Save
                             </button>
                             <button
                               onClick={handleCancelEdit}
-                              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200 flex items-center gap-2"
+                              className="btn-accent text-sm py-2 px-4"
                             >
                               ✗ Cancel
                             </button>
@@ -559,19 +561,19 @@ const AdminDashboard: React.FC = () => {
                           <>
                             <button
                               onClick={() => handleEditAct(act)}
-                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200 flex items-center gap-2"
+                              className="btn-spotlight text-sm py-2 px-4"
                             >
                               ✏️ Edit
                             </button>
                             <button
                               onClick={() => handleApproveAct(act.id)}
-                              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200"
+                              className="btn-primary text-sm py-2 px-4"
                             >
                               ✅ Approve
                             </button>
                             <button
                               onClick={() => handleRejectAct(act.id)}
-                              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200"
+                              className="btn-curtain text-sm py-2 px-4"
                             >
                               ❌ Reject
                             </button>

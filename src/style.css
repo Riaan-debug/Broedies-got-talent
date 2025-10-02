@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,27 +8,152 @@
 @layer base {
   body {
     font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #991b1b 75%, #7f1d1d 100%);
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
   }
 }
 
 @layer components {
+  /* Theatrical Buttons */
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl;
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-glow;
   }
   
   .btn-secondary {
-    @apply bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl;
+    @apply bg-secondary-500 hover:bg-secondary-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-sparkle;
   }
   
   .btn-accent {
-    @apply bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl;
+    @apply bg-accent-800 hover:bg-accent-900 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105;
   }
   
+  .btn-curtain {
+    @apply bg-curtain-700 hover:bg-curtain-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105;
+  }
+  
+  .btn-spotlight {
+    @apply bg-spotlight-500 hover:bg-spotlight-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-spotlight;
+  }
+  
+  /* Theatrical Cards */
   .card {
-    @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100;
+    @apply bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl p-6 border border-secondary-200/50 relative overflow-hidden;
   }
   
-  .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #dc2626, #f59e0b, #dc2626);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
   }
+  
+  .card-theatrical {
+    @apply bg-gradient-to-br from-white/90 to-secondary-50/90 backdrop-blur-sm rounded-xl shadow-2xl p-6 border-2 border-secondary-300/50 relative overflow-hidden;
+  }
+  
+  .card-stage {
+    @apply bg-gradient-to-br from-accent-900/95 to-accent-800/95 backdrop-blur-sm rounded-xl shadow-2xl p-6 border-2 border-secondary-400/50 text-white relative overflow-hidden;
+  }
+  
+  /* Theatrical Input Fields */
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-secondary-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-secondary-500 transition-all duration-300 bg-white/90 backdrop-blur-sm;
+  }
+  
+  /* Marquee Effect */
+  .marquee {
+    @apply bg-gradient-to-r from-curtain-800 via-curtain-700 to-curtain-800 text-secondary-200 font-bold py-4 px-6 rounded-lg border-2 border-secondary-400 relative overflow-hidden;
+  }
+  
+  .marquee::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.3), transparent);
+    animation: marquee-shine 3s ease-in-out infinite;
+  }
+  
+  /* Spotlight Effect */
+  .spotlight {
+    @apply relative;
+  }
+  
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    animation: spotlight-sweep 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  /* Curtain Effect */
+  .curtain {
+    @apply relative overflow-hidden;
+  }
+  
+  .curtain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #dc2626 0%, #991b1b 50%, #dc2626 100%);
+    transform: translateX(-100%);
+    animation: curtain-open 2s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.5), 0 0 20px rgba(245, 158, 11, 0.3);
+  }
+  
+  .text-curtain {
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.5), 0 0 20px rgba(220, 38, 38, 0.3);
+  }
+  
+  .bg-theatrical {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #991b1b 75%, #7f1d1d 100%);
+  }
+  
+  .bg-stage {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #991b1b 100%);
+  }
+  
+  .bg-curtains {
+    background: linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%);
+  }
+}
+
+/* Custom Animations */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes marquee-shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes spotlight-sweep {
+  0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.3; }
+  50% { transform: rotate(180deg) scale(1.2); opacity: 0.6; }
 }

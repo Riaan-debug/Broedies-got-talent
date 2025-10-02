@@ -288,3 +288,4 @@ const ActRegistration: React.FC = () => {
 };
 
 export default ActRegistration;
+
