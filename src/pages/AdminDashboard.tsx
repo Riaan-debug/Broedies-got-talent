@@ -294,7 +294,7 @@ const AdminDashboard: React.FC = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <QRCodeDisplay
               url={`${window.location.origin}/audience`}
               title="🎭 Audience Experience"
@@ -304,11 +304,6 @@ const AdminDashboard: React.FC = () => {
               url={`${window.location.origin}/register`}
               title="📝 Act Registration"
               description="Scan to register a new act"
-            />
-            <QRCodeDisplay
-              url={`${window.location.origin}/display`}
-              title="📺 Display Screen"
-              description="Scan for projector display view"
             />
           </div>
         </motion.div>
