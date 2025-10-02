@@ -268,7 +268,7 @@ const AdminDashboard: React.FC = () => {
               📺 Display View
             </a>
             <a
-              href="/vote"
+              href="/audience"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-accent"
@@ -296,9 +296,9 @@ const AdminDashboard: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <QRCodeDisplay
-              url={`${window.location.origin}/vote`}
-              title="🎭 Audience Voting"
-              description="Scan to vote and comment on acts"
+              url={`${window.location.origin}/audience`}
+              title="🎭 Audience Experience"
+              description="Scan to vote, comment, and participate"
             />
             <QRCodeDisplay
               url={`${window.location.origin}/register`}

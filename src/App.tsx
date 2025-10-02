@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import AdminDashboard from './pages/AdminDashboard';
-import AudienceVoting from './pages/AudienceVoting';
+import AudiencePage from './pages/AudiencePage';
 import DisplayScreen from './pages/DisplayScreen';
 import ActRegistration from './pages/ActRegistration';
-import LandingPage from './pages/LandingPage';
 
 // Admin Route Component
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -53,8 +52,8 @@ const App: React.FC = () => {
         <div className="App">
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/vote" element={<AudienceVoting />} />
+            <Route path="/" element={<AudiencePage />} />
+            <Route path="/audience" element={<AudiencePage />} />
             <Route path="/display" element={<DisplayScreen />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<ActRegistration />} />
