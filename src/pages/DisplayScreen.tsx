@@ -26,7 +26,7 @@ const DisplayScreen: React.FC = () => {
     const totalAnswers = Object.values(activeTrivia.results).reduce((sum, count) => sum + count, 0);
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 to-yellow-900 text-white">
+      <div className="min-h-screen bg-stage text-white">
         <div className="min-h-screen flex items-center justify-center p-8">
           <motion.div
             className="max-w-6xl w-full"
@@ -41,9 +41,9 @@ const DisplayScreen: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <h1 className="text-6xl font-bold mb-4">🎯</h1>
-              <h2 className="text-5xl font-bold mb-6">Trivia Time!</h2>
-              <p className="text-2xl text-gray-300">{activeTrivia.question}</p>
+              <h1 className="text-8xl font-bold mb-4 animate-sparkle">🎪</h1>
+              <h2 className="text-6xl font-bold mb-6 text-secondary-200 text-glow">TRIVIA TIME!</h2>
+              <p className="text-3xl text-secondary-300 font-semibold">{activeTrivia.question}</p>
             </motion.div>
 
             {/* Options */}
@@ -117,13 +117,13 @@ const DisplayScreen: React.FC = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="text-8xl mb-8">🎭</div>
-          <h1 className="text-6xl font-bold mb-6">Broedies Got Talent</h1>
-          <p className="text-2xl text-gray-300 mb-8">
+          <h1 className="text-7xl font-bold mb-6 text-secondary-200 text-glow">BROEDIES GOT TALENT</h1>
+          <p className="text-3xl text-secondary-300 mb-8 font-semibold">
             The next performance will begin soon...
           </p>
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">What's Coming Up:</h2>
-            <ul className="text-xl text-gray-300 space-y-3 text-left">
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto border-2 border-secondary-400">
+            <h2 className="text-4xl font-bold mb-6 text-secondary-200">🎪 What's Coming Up:</h2>
+            <ul className="text-2xl text-secondary-300 space-y-3 text-left font-semibold">
               <li>🎵 Amazing musical performances</li>
               <li>💃 Incredible dance routines</li>
               <li>🎪 Spectacular magic shows</li>
@@ -138,21 +138,21 @@ const DisplayScreen: React.FC = () => {
 
   if (actLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-900 to-secondary-900 text-white flex items-center justify-center">
+      <div className="min-h-screen bg-stage text-white flex items-center justify-center">
         <motion.div
           className="text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <div className="w-20 h-20 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-          <p className="text-2xl">Loading...</p>
+          <div className="w-20 h-20 border-4 border-secondary-400 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+          <p className="text-3xl text-secondary-200 font-semibold">🎭 Loading the show...</p>
         </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-900 to-secondary-900 text-white">
+    <div className="min-h-screen bg-stage text-white">
       {/* Floating Comments */}
       <AnimatePresence>
         {displayedComments.map((comment, index) => (

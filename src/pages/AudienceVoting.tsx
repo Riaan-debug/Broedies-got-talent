@@ -26,14 +26,14 @@ const AudienceVoting: React.FC = () => {
 
   if (actLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 flex items-center justify-center">
+      <div className="min-h-screen bg-theatrical flex items-center justify-center">
         <motion.div
           className="text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading...</p>
+          <div className="w-16 h-16 border-4 border-secondary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg text-secondary-200 font-semibold">🎭 Loading the show...</p>
         </motion.div>
       </div>
     );
@@ -42,17 +42,17 @@ const AudienceVoting: React.FC = () => {
   // Show trivia if active
   if (activeTrivia && !triviaLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 py-8">
+      <div className="min-h-screen bg-theatrical py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-8"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-4xl font-bold text-blue-600 mb-2">
-              🎯 Trivia Time!
+            <h1 className="text-4xl font-bold text-secondary-200 text-glow mb-2">
+              🎪 TRIVIA TIME! 🎪
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-secondary-300 font-semibold">
               Answer the question below to participate
             </p>
           </motion.div>
@@ -81,25 +81,25 @@ const AudienceVoting: React.FC = () => {
   // No active act
   if (!activeAct) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 flex items-center justify-center">
+      <div className="min-h-screen bg-theatrical flex items-center justify-center">
         <motion.div
           className="text-center max-w-md mx-auto px-4"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="text-8xl mb-6">🎭</div>
-          <h1 className="text-3xl font-bold text-blue-600 mb-4">
-            Broedies Got Talent
+          <div className="text-8xl mb-6 animate-sparkle">🎭</div>
+          <h1 className="text-4xl font-bold text-secondary-200 text-glow mb-4">
+            BROEDIES GOT TALENT
           </h1>
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-secondary-300 mb-6 font-semibold">
             Welcome to our talent show! The next performance will begin soon.
           </p>
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              What to expect:
+          <div className="card-theatrical">
+            <h2 className="text-xl font-semibold text-accent-800 mb-2">
+              🎪 What to expect:
             </h2>
-            <ul className="text-left text-gray-600 space-y-2">
+            <ul className="text-left text-accent-700 space-y-2 font-semibold">
               <li>⭐ Rate performances 1-5 stars</li>
               <li>💬 Leave comments and emojis</li>
               <li>🎯 Participate in trivia between acts</li>
@@ -112,7 +112,7 @@ const AudienceVoting: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 py-8">
+    <div className="min-h-screen bg-theatrical py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -120,56 +120,56 @@ const AudienceVoting: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-4xl font-bold text-blue-600 mb-2">
-            🎭 Broedies Got Talent
+          <h1 className="text-4xl font-bold text-secondary-200 text-glow mb-2">
+            🎭 BROEDIES GOT TALENT
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-secondary-300 font-semibold">
             Vote for your favorite performance!
           </p>
         </motion.div>
 
         {/* Current Act */}
         <motion.div
-          className="card mb-8"
+          className="card-theatrical mb-8 spotlight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-semibold">
-                ACT{activeAct.id.slice(-3)}
+              <span className="bg-primary-200 text-primary-800 px-4 py-2 rounded-full font-bold border border-primary-400">
+                🎭 ACT{activeAct.id.slice(-3)}
               </span>
-              <span className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-semibold">
-                {activeAct.grade}
+              <span className="bg-secondary-200 text-secondary-800 px-4 py-2 rounded-full font-bold border border-secondary-400">
+                📚 {activeAct.grade}
               </span>
               {activeAct.isActive && (
                 <motion.span
-                  className="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold"
+                  className="bg-accent-200 text-accent-800 px-4 py-2 rounded-full font-bold border border-accent-400 animate-sparkle"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200 }}
                 >
-                  LIVE
+                  🎪 LIVE
                 </motion.span>
               )}
               {activeAct.isVotingOpen && (
                 <motion.span
-                  className="bg-pink-100 text-pink-800 px-4 py-2 rounded-full font-semibold"
+                  className="bg-curtain-200 text-curtain-800 px-4 py-2 rounded-full font-bold border border-curtain-400 animate-glow"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
                 >
-                  VOTING OPEN
+                  ⭐ VOTING OPEN
                 </motion.span>
               )}
             </div>
             
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl font-bold text-accent-800 mb-4 text-curtain">
               {activeAct.name}
             </h2>
             
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-accent-700 mb-6 font-semibold">
               {activeAct.description}
             </p>
 

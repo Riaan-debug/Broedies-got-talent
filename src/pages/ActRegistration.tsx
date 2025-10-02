@@ -50,16 +50,16 @@ const ActRegistration: React.FC = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-theatrical flex items-center justify-center p-4">
         <motion.div
           className="max-w-md w-full"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="card text-center">
+          <div className="card-theatrical spotlight text-center">
             <motion.div
-              className="text-6xl mb-4"
+              className="text-8xl mb-4 animate-sparkle"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
@@ -67,13 +67,13 @@ const ActRegistration: React.FC = () => {
               ✅
             </motion.div>
             
-            <h1 className="text-3xl font-bold text-green-600 mb-4">
+            <h1 className="text-3xl font-bold text-primary-600 mb-4 text-curtain">
               Registration Successful!
             </h1>
             
-            <div className="bg-green-100 rounded-lg p-4 mb-6">
-              <p className="text-green-800 font-semibold mb-2">Your Act ID:</p>
-              <p className="text-2xl font-bold text-green-900">ACT{actId.slice(-3)}</p>
+            <div className="bg-secondary-100 border-2 border-secondary-300 rounded-lg p-4 mb-6">
+              <p className="text-secondary-800 font-semibold mb-2">Your Act ID:</p>
+              <p className="text-2xl font-bold text-secondary-900">ACT{actId.slice(-3)}</p>
             </div>
             
             <div className="text-left mb-6">
@@ -118,7 +118,7 @@ const ActRegistration: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 py-8">
+    <div className="min-h-screen bg-theatrical py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -126,23 +126,31 @@ const ActRegistration: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-4xl font-bold text-blue-600 mb-2">
-            🎭 Register Your Act
+          <motion.div
+            className="text-8xl mb-6 animate-sparkle"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+          >
+            🎭
+          </motion.div>
+          <h1 className="text-4xl font-bold text-secondary-200 text-glow mb-2">
+            BROEDIES GOT TALENT
           </h1>
-          <p className="text-lg text-gray-600">
-            Sign up for Broedies Got Talent Show!
+          <p className="text-lg text-secondary-300 font-semibold">
+            ✨ Register Your Act ✨
           </p>
         </motion.div>
 
         {/* Registration Form */}
         <motion.div
-          className="card"
+          className="card-theatrical spotlight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-            Act Information
+          <h2 className="text-2xl font-bold text-accent-800 mb-6 text-center">
+            🎪 Act Information
           </h2>
           
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -251,30 +259,30 @@ const ActRegistration: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-spotlight flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <div className="flex items-center justify-center">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Registering...
+                    🎭 Registering...
                   </div>
                 ) : (
-                  'Register Act'
+                  '🎭 Register Act'
                 )}
               </button>
               
               <a
                 href="/vote"
-                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-center"
+                className="btn-accent text-center"
               >
                 Cancel
               </a>
             </div>
           </form>
 
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <h3 className="font-semibold text-blue-800 mb-2">📋 Important Notes:</h3>
-            <ul className="text-sm text-blue-700 space-y-1">
+          <div className="mt-6 p-4 bg-secondary-100 border-2 border-secondary-300 rounded-lg">
+            <h3 className="font-semibold text-secondary-800 mb-2">📋 Important Notes:</h3>
+            <ul className="text-sm text-secondary-700 space-y-1 font-semibold">
               <li>• All acts will be reviewed before approval</li>
               <li>• You'll receive an Act ID for reference</li>
               <li>• Contact information helps us reach you if needed</li>
